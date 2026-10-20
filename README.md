@@ -1,115 +1,74 @@
-<h1 align="center">Claims Desk for Claude Code</h1>
+# Claims Desk for Claude Code
 
-<p align="center">
-  <strong>The open-source claims desk that is just a database and Claude Code.</strong>
-</p>
+Own the claims diary, evidence chase and administrative file review. A database and plain-language work with Claude Code, Codex, OpenCode or Cursor. MIT licensed. This is an operational desk base for general-insurance claims; insurer decisions and financial systems stay in place.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+## Three ways to use it
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Salesforce Insurance Claims Management data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=salesforce-insurance-claims">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/salesforce-insurance-claims?utm_source=github&utm_medium=readme&utm_campaign=salesforce-insurance-claims">How it works</a></td>
-  </tr>
-</table>
+- **Do it yourself:** install the free code, keep the database private and import your Salesforce claim headers. Hosting and your agent subscription are your costs.
+- **We customise it:** Enterprise DNA maps your export, adds your fields and service rules, and builds the interface or different stack your team needs.
+- **We run it for you:** Omni by Enterprise DNA installs, connects and operates your version. One setup fee, then a retainer. [Book a call](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=salesforce-insurance-claims&utm_medium=readme).
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-salesforce-insurance-claims">Instead of Salesforce Insurance Claims Management</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Claims Desk for Claude Code does the job you pay Salesforce Insurance Claims Management for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Salesforce Insurance Claims Management dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Salesforce Insurance Claims Management per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=salesforce-insurance-claims).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
-
-## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+## Start with fictional data
 
 ```bash
-git clone https://github.com/Enterprise-DNA-OS/claims-desk-for-claude-code.git
-cd claims-desk-for-claude-code
 npm install
+npm test
 npm run demo
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+The demo uses a temporary database and removes it afterwards. Use npm run demo -- --keep to keep its private HTML, captured command output and fictional database. For a persistent local demo run npm run migrate then npm run seed. Seeding refuses a named business workspace.
 
-### Use it with your own Postgres or Supabase
+## Start your own desk
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
-
-## The commands
-
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
-
-| Command | What it does |
-|---|---|
-| `/...` | ... |
-
-## Instead of salesforce-insurance-claims
-
-<!-- TODO(author): how to bring data across from Salesforce Insurance Claims Management; link docs/replace-salesforce-insurance-claims.md -->
-
-## Architecture
-
-```
-claims-desk-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
+```bash
+npm run migrate
+node scripts/claims.mjs init --name="Your business"
+node scripts/claims.mjs import salesforce imports/claims.csv --dry-run --actor="Your name"
+node scripts/claims.mjs import salesforce imports/claims.csv --actor="Your name"
 ```
 
-## Built for coding agents
+[The import guide](docs/replace-salesforce-insurance-claims.md) states the exact fields and exclusions. Claims begin open for reconciliation even if the source says closed. Keep private files in imports/, exports/ and drafts/, which are ignored by git. DATABASE_URL selects private Postgres; otherwise DATA_DIR chooses local PGlite. OUTPUT_DIR chooses where private output is written. One trusted operator and one business per database; this is not an authenticated multi-user service.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## The weekly claims rituals
 
-## Contributing
+Read /attention and /diary each morning. Use /evidence-chase to see who has not supplied records. /acknowledge and /log-update record communications already made; they never send them. /review-queue and /record-review manage an independent administrative file check. /weekly-review drafts the week from three live reads. /compliance flags stored-record gaps against the cited [service rules](docs/compliance.md).
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+There are 23 CLI operations and 27 slash recipes. [All command syntax](docs/cli.md). Mutations require an actor label, write append-only history and invalidate previous reviews when the file changes. A closed file cannot be changed through the CLI. Closure requires a current review, complete requested evidence and an external resolution reference. No insurance decision or payment is made here.
 
-## Want it installed and run for you?
+## Paperwork and read-only views
 
-Enterprise DNA installs Claims Desk for Claude Code for your business, migrates your Salesforce Insurance Claims Management data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+Set brand.json to your business name, local logo and colours. npm run docs renders a claim file pack, evidence-request draft and service history per claim. npm run view renders the week, evidence chase and service checks. Text is escaped, wide records scroll on small screens, and outputs remain private. [Why there is no front end](docs/why-no-front-end.md).
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=salesforce-insurance-claims)
-- Read more: [enterprisedna.co/omni/instead-of/salesforce-insurance-claims](https://enterprisedna.co/omni/instead-of/salesforce-insurance-claims?utm_source=github&utm_medium=readme&utm_campaign=salesforce-insurance-claims)
+## Ten questions answered from your records
 
-## License
+/insights answers these today. They are implemented joins across your records, not assertions about what Salesforce cannot configure.
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+1. Which handlers have overdue evidence?
+2. Which claims are missing a handler?
+3. Which claims need Code scope confirmation?
+4. Which claims have all requested evidence and need review?
+5. Which records changed after an administrative review?
+6. Which third parties are holding up evidence?
+7. Which claims have overdue progress updates?
+8. Which acknowledgements were recorded late?
+9. Which claim types have the oldest open records?
+10. Which reviewed claims are ready for a closure check?
+
+## Your first hour: ten things to ask for
+
+1. Show the claims needing attention today.
+2. Find the evidence overdue from assessors.
+3. Tell me which claims have no handler.
+4. Record the acknowledgement we already sent.
+5. Set the next agreed progress update date.
+6. Draft a claimant update from the evidence history.
+7. Find files changed since the last review.
+8. Put our name on an evidence-request draft.
+9. Add a read-only view grouped by claim type.
+10. Add our catastrophe-event reference through /customise.
+
+## Verification and limits
+
+npm test checks every CLI operation, atomic and repeat imports, custom mapping, stale-review rejection, independent reviewers, closed-file controls, append-only history, invalid dates, archives, drafts, escaped HTML and process exit codes. Linux and Windows run through the included workflow. [Build evidence](docs/verification.md).
+
+Service dates are confirmed by the handler using the correct business-day calendar and applicability; the base does not calculate legal deadlines. Actor names are labels, not authenticated identities. Missing dates and unknown scope are surfaced. No portal, signatures, coverage rules, policy administration, reserves, payments or automated compliance certificate is included. Back up the database and test restoration; the JSON archive has no automatic restore command.

@@ -1,13 +1,36 @@
 [
   {
-    "name": "week",
-    "title": "This week",
-    "subtitle": "Claims Desk for Claude Code: what needs attention, rendered by npm run view",
+    "name": "claims-week",
+    "title": "Claims week",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Open desk",
+        "sql": "select number,claimant,owner,evidence_waiting,review_current,age_days from claim_desk where status='open' order by age_days desc"
+      },
+      {
+        "title": "Service dates",
+        "sql": "select number,owner,obligation,due_date from service_diary order by due_date nulls first"
+      }
+    ]
+  },
+  {
+    "name": "evidence-chase",
+    "title": "Evidence chase",
+    "sections": [
+      {
+        "title": "Requests still waiting",
+        "sql": "select number,owner,description,requested_from,due_date,days_overdue from evidence_chase order by due_date"
+      }
+    ]
+  },
+  {
+    "name": "service-check",
+    "title": "Service record checks",
+    "sections": [
+      {
+        "title": "Items for a handler to check",
+        "note": "Stored deadlines are confirmed by the operator. This is not a legal compliance certificate.",
+        "sql": "select number,rule,finding from compliance_findings order by number,rule"
       }
     ]
   }

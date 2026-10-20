@@ -1,11 +1,61 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "claim-file",
+    "title": "Claim file review pack",
+    "for_each": "select id,number from claims order by number",
+    "file": "number",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Claim record",
+        "sql": "select number,claimant,policy_ref,loss_date,received_date,claim_type,summary,owner,status,source_status,resolution_ref from claims where id=$1",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      },
+      {
+        "title": "Evidence",
+        "sql": "select description,requested_from,due_date,received_date,reference from evidence where claim_id=$1 order by due_date",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      },
+      {
+        "title": "Administrative reviews",
+        "sql": "select revision,reviewer,note,reviewed_at from reviews where claim_id=$1 order by reviewed_at",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      }
+    ]
+  },
+  {
+    "name": "evidence-request",
+    "title": "Evidence request draft",
+    "for_each": "select id,number from claims order by number",
+    "file": "number",
+    "sections": [
+      {
+        "title": "Claim reference",
+        "sql": "select number,claimant,owner from claims where id=$1",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      },
+      {
+        "title": "Requested records",
+        "sql": "select description,requested_from,due_date from evidence where claim_id=$1 and received_date is null order by due_date",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      }
+    ]
+  },
+  {
+    "name": "service-record",
+    "title": "Service history",
+    "for_each": "select id,number from claims order by number",
+    "file": "number",
+    "sections": [
+      {
+        "title": "Dates and scope",
+        "sql": "select number,code_scope,scope_reason,ack_due,ack_date,last_update,update_due,decision_due from claims where id=$1",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      },
+      {
+        "title": "History",
+        "sql": "select actor,action,detail,created_at from claim_events where claim_id=$1 order by created_at",
+        "note": "Internal draft for handler review. No claim decision or payment authority."
+      }
     ]
   }
 ]

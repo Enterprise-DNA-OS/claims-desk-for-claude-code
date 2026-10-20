@@ -1,24 +1,5 @@
 # Why there is no front end
 
-Salesforce Insurance Claims Management is a database with a subscription. The tables underneath it are ordinary: a few entities, a few relationships, a handful of workflows you repeat every week. What you pay for is the layer on top that lets people who do not write SQL get at those tables. Screens, filters, dashboards, forms.
+The weekly job is reading claims, chasing evidence, recording service contacts and checking files. Commands and private branded HTML cover that desk work. Views have no action controls, server or public sharing.
 
-That layer used to be the whole product, because talking to a database was hard. It is not hard any more. Open this folder in Claude Code, describe what you want, and it writes the query, runs it, and explains the answer. Ask a question the dashboard never had a chart for and you still get an answer.
-
-## What you gain
-
-- **Better answers.** A dashboard shows what the vendor decided to chart. Here you ask your own question, in your own words, and get it answered against your own data.
-- **No seats.** Everyone who needs to look can look. The bill does not grow with headcount.
-- **Your data in your Postgres.** Plain tables. Back them up, query them from anything, leave any time. There is no export step because there is nothing to leave.
-- **A process that matches you.** When your way of working changes, you add a command. You do not wait for a feature request to clear.
-
-## What you give up
-
-- **A visual board.** Stages are a table you ask about, not cards you drag.
-- **A phone app.** It runs where Claude Code runs.
-- **A vendor help desk.** This is open source. Enterprise DNA supports the installed version for businesses that want someone to call.
-
-## Who this fits
-
-Small teams who already use Claude Code, or who would rather learn to ask than learn another interface. If your team needs a screen to look at all day, keep Salesforce Insurance Claims Management. If you need the answers more than the screens, this is cheaper, faster and yours.
-
-Installed and run for you: https://enterprisedna.co/omni/instead-of/salesforce-insurance-claims
+This base does not provide mobile intake, offline capture, live collaboration, drag-and-drop attachments or a claimant portal. Evidence stays in approved private storage and is referenced here. Enterprise DNA can scope a tailored interface and approved connections around the desk. Insurer decisions, policy administration, reserves and payments remain in their approved systems. Do not point an unauthenticated web page at the database.

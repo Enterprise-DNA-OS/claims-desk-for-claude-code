@@ -1,16 +1,41 @@
-# Claims Desk for Claude Code: instructions for any coding agent
+# Claims Desk for Claude Code: operating instructions
 
-Claude Code reads `CLAUDE.md`. Codex, OpenCode, Cursor, Gemini CLI and the rest read this file. They say the same thing: **read `CLAUDE.md` now and follow it.** It holds who this is for, the routing table (one right way for each recurring job), and the house rules.
+Read README.md, docs/cli.md and docs/compliance.md. Confirm the workspace identity before acting. One business and one trusted operator per database. Answer from actual CLI output and approved private evidence only.
 
-Two differences when you are not Claude Code:
+Use scripts/claims.mjs for changes. Read the claim first. Never decide cover, approve a settlement, calculate reserves, initiate payments or send anything. Acknowledge and log-update record communications that already happened. Every draft stays private. The operator confirms Code applicability, business-day deadlines and agreed progress intervals. A clean check list does not certify compliance.
 
-1. The slash commands live in `.claude/commands/*.md`. Each one is a short recipe: which script to run and how to present the result. Open the matching file and do what it says, exactly as a slash command would.
-2. Everything else is plain: `scripts/*.mjs` is the CLI, `supabase/migrations/` is the schema, `DATABASE_URL` (or the embedded PGlite) is the data. No agent-specific glue anywhere.
+Actor and reviewer names are supplied labels, not authenticated identities. The reviewer must differ from the handler. Record-review concerns administrative completeness only. Changes invalidate earlier reviews. Close only with an explicit instruction and an external insurer resolution reference. Closed records cannot be edited through the CLI. History is append-only.
 
-## The one rule
+Keep personal records, evidence, exports and secrets out of git. Never seed a business workspace or expose an owner database connection through a public service. Back up before migrations. Add numbered migrations, do not rewrite applied ones. Run npm test and npm run demo after changes. DATABASE_URL selects private Postgres; otherwise DATA_DIR selects local PGlite. OUTPUT_DIR sets the private output folder. brand.json controls private documents and views.
 
-Every answer starts with data from the CLI. Never answer a question about the records from memory.
+## Routing
 
-## Want it done for you?
+- /acknowledge: .claude/commands/acknowledge.md
+- /assign: .claude/commands/assign.md
+- /attention: .claude/commands/attention.md
+- /claims: .claude/commands/claims.md
+- /close: .claude/commands/close.md
+- /compliance: .claude/commands/compliance.md
+- /customise: .claude/commands/customise.md
+- /diary: .claude/commands/diary.md
+- /documents: .claude/commands/documents.md
+- /draft-update: .claude/commands/draft-update.md
+- /evidence-chase: .claude/commands/evidence-chase.md
+- /export: .claude/commands/export.md
+- /history: .claude/commands/history.md
+- /import: .claude/commands/import.md
+- /init: .claude/commands/init.md
+- /insights: .claude/commands/insights.md
+- /intake: .claude/commands/intake.md
+- /log-update: .claude/commands/log-update.md
+- /new-view: .claude/commands/new-view.md
+- /receive-evidence: .claude/commands/receive-evidence.md
+- /record-review: .claude/commands/record-review.md
+- /request-evidence: .claude/commands/request-evidence.md
+- /review-queue: .claude/commands/review-queue.md
+- /set-service: .claude/commands/set-service.md
+- /show: .claude/commands/show.md
+- /views: .claude/commands/views.md
+- /weekly-review: .claude/commands/weekly-review.md
 
-Enterprise DNA installs, customises and runs Claims Desk for Claude Code for businesses that would rather not: https://enterprisedna.co/omni/book/
+Installed and operated through Omni by Enterprise DNA: https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=salesforce-insurance-claims&utm_medium=agent

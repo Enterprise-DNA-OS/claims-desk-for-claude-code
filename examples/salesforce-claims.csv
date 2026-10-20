@@ -1,0 +1,3 @@
+Id,Name,AccountId,PolicyNumberId,ClaimLossDate,CreatedDate,ClaimType,Summary,Status,OwnerId
+0Zk000000000001,EXT-1001,001DEMO001,POL-DEMO001,2026-01-03,2026-01-04T09:15:00.000Z,Property,"Water damage, stock review",Submitted,005DEMO001
+0Zk000000000002,EXT-1002,001DEMO002,POL-DEMO002,2026-01-05,2026-01-06T10:00:00.000Z,Transit,Delivery inspection required,Closed,005DEMO002
